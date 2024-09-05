@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.MedicalPolicyMapper">
+    
+    <resultMap type="MedicalPolicy" id="MedicalPolicyResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="title"    column="title"    />
+        <result property="message"    column="message"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap id="MedicalPolicyChinaResult" type="MedicalPolicy" extends="MedicalPolicyResult">
+        <collection property="chinaList" ofType="China" column="id" select="selectChinaList" />
+    </resultMap>
+
+    <resultMap type="China" id="ChinaResult">
+        <result property="cityId"    column="city_id"    />
+        <result property="name"    column="name"    />
+        <result property="parentId"    column="parent_id"    />
+    </resultMap>
+
+    <sql id="selectMedicalPolicyVo">
+        select id, code, title, message, city_id, create_time, update_time from t_medical_policy
+    </sql>
+
+    <select id="selectMedicalPolicyList" parameterType="MedicalPolicy" resultMap="MedicalPolicyResult">
+        <include refid="selectMedicalPolicyVo"/>
+        <where>  
+            <if test="code != null "> and code = #{code}</if>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="message != null  and message != ''"> and message like concat('%', #{message}, '%')</if>
+            <if test="cityId != null "> and city_id = #{cityId}</if>
+        </where>
+    </select>
+    
+    <select id="selectMedicalPolicyById" parameterType="Long" resultMap="MedicalPolicyChinaResult">
+        select id, code, title, message, city_id, create_time, update_time
+        from t_medical_policy
+        where id = #{id}
+    </select>
+
+    <select id="selectChinaList" resultMap="ChinaResult">
+        select city_id, name, parent_id
+        from t_china
+        where city_id = #{city_id}
+    </select>
+
+    <insert id="insertMedicalPolicy" parameterType="MedicalPolicy" useGeneratedKeys="true" keyProperty="id">
+        insert into t_medical_policy
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="title != null">title,</if>
+            <if test="message != null">message,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="title != null">#{title},</if>
+            <if test="message != null">#{message},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateMedicalPolicy" parameterType="MedicalPolicy">
+        update t_medical_policy
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteMedicalPolicyById" parameterType="Long">
+        delete from t_medical_policy where id = #{id}
+    </delete>
+
+    <delete id="deleteMedicalPolicyByIds" parameterType="String">
+        delete from t_medical_policy where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteChinaByCityIds" parameterType="String">
+        delete from t_china where city_id in 
+        <foreach item="cityId" collection="array" open="(" separator="," close=")">
+            #{cityId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteChinaByCityId" parameterType="Long">
+        delete from t_china where city_id = #{cityId}
+    </delete>
+
+    <insert id="batchChina">
+        insert into t_china( city_id, name, parent_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.cityId}, #{item.name}, #{item.parentId})
+        </foreach>
+    </insert>
+</mapper>
