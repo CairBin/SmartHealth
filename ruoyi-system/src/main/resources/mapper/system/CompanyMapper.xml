@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.CompanyMapper">
+    
+    <resultMap type="Company" id="CompanyResult">
+        <result property="companyId"    column="company_id"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="companyPhone"    column="company_phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <resultMap id="CompanyCompanyPolicyResult" type="Company" extends="CompanyResult">
+        <collection property="companyPolicyList" ofType="CompanyPolicy" column="company_id" select="selectCompanyPolicyList" />
+    </resultMap>
+
+    <resultMap type="CompanyPolicy" id="CompanyPolicyResult">
+        <result property="id"    column="id"    />
+        <result property="companyId"    column="company_id"    />
+        <result property="title"    column="title"    />
+        <result property="message"    column="message"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectCompanyVo">
+        select company_id, company_name, company_phone, create_time, update_time from t_company
+    </sql>
+
+    <select id="selectCompanyList" parameterType="Company" resultMap="CompanyResult">
+        <include refid="selectCompanyVo"/>
+        <where>  
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="companyPhone != null  and companyPhone != ''"> and company_phone = #{companyPhone}</if>
+        </where>
+    </select>
+    
+    <select id="selectCompanyByCompanyId" parameterType="Long" resultMap="CompanyCompanyPolicyResult">
+        select company_id, company_name, company_phone, create_time, update_time
+        from t_company
+        where company_id = #{companyId}
+    </select>
+
+    <select id="selectCompanyPolicyList" resultMap="CompanyPolicyResult">
+        select id, company_id, title, message, create_time
+        from t_company_policy
+        where company_id = #{company_id}
+    </select>
+
+    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">
+        insert into t_company
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="companyName != null">company_name,</if>
+            <if test="companyPhone != null">company_phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="companyName != null">#{companyName},</if>
+            <if test="companyPhone != null">#{companyPhone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCompany" parameterType="Company">
+        update t_company
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="companyName != null">company_name = #{companyName},</if>
+            <if test="companyPhone != null">company_phone = #{companyPhone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where company_id = #{companyId}
+    </update>
+
+    <delete id="deleteCompanyByCompanyId" parameterType="Long">
+        delete from t_company where company_id = #{companyId}
+    </delete>
+
+    <delete id="deleteCompanyByCompanyIds" parameterType="String">
+        delete from t_company where company_id in 
+        <foreach item="companyId" collection="array" open="(" separator="," close=")">
+            #{companyId}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteCompanyPolicyByCompanyIds" parameterType="String">
+        delete from t_company_policy where company_id in 
+        <foreach item="companyId" collection="array" open="(" separator="," close=")">
+            #{companyId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteCompanyPolicyByCompanyId" parameterType="Long">
+        delete from t_company_policy where company_id = #{companyId}
+    </delete>
+
+    <insert id="batchCompanyPolicy">
+        insert into t_company_policy( id, company_id, title, message, create_time) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.companyId}, #{item.title}, #{item.message}, #{item.createTime})
+        </foreach>
+    </insert>
+</mapper>
