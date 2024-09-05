@@ -268,6 +268,121 @@ TODO
 
 
 
+#### 接口设计
+
+* 药品接口
+
+```java
+/**
+* 查询药物信息列表
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:list')")
+@GetMapping("/list")
+public TableDataInfo list(Drug drug)
+  
+  
+/**
+* 导出药物信息列表
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:export')")
+@Log(title = "药物信息", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, Drug drug)
+  
+/**
+* 获取药物信息详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:query')")
+@GetMapping(value = "/{drugId}")
+public AjaxResult getInfo(@PathVariable("drugId") Long drugId)
+  
+/**
+* 新增药物信息
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:add')")
+@Log(title = "药物信息", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody Drug drug)
+  
+  
+/**
+* 修改药物信息
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:edit')")
+@Log(title = "药物信息", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody Drug drug)
+  
+/**
+* 删除药物信息
+*/
+@PreAuthorize("@ss.hasPermi('system:drug:remove')")
+@Log(title = "药物信息", businessType = BusinessType.DELETE)
+@DeleteMapping("/{drugIds}")
+public AjaxResult remove(@PathVariable Long[] drugIds)
+```
+
+
+
+* 药店接口设计
+
+
+
+```java
+/**
+* 查询商店信息列表
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:list')")
+@GetMapping("/list")
+public TableDataInfo list(Sale sale)
+      
+/**
+* 导出商店信息列表
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:export')")
+@Log(title = "商店信息", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, Sale sale)
+      
+/**
+* 获取商店信息详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:query')")
+@GetMapping(value = "/{saleId}")
+public AjaxResult getInfo(@PathVariable("saleId") Long saleId)
+      
+/**
+* 新增商店信息
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:add')")
+@Log(title = "商店信息", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody Sale sale)
+  
+  
+/**
+* 修改商店信息
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:edit')")
+@Log(title = "商店信息", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody Sale sale)
+      
+/**
+* 删除商店信息
+*/
+@PreAuthorize("@ss.hasPermi('system:sale:remove')")
+@Log(title = "商店信息", businessType = BusinessType.DELETE)
+@DeleteMapping("/{saleIds}")
+public AjaxResult remove(@PathVariable Long[] saleIds)
+```
+
+
+
+
+
+
+
 ### 必备材料模块
 
 #### 数据库设计

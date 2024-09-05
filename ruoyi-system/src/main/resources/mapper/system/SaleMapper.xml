@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SaleMapper">
+    
+    <resultMap type="Sale" id="SaleResult">
+        <result property="saleId"    column="sale_id"    />
+        <result property="saleName"    column="sale_name"    />
+        <result property="salePhone"    column="sale_phone"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectSaleVo">
+        select sale_id, sale_name, sale_phone, create_time, update_time from t_sale
+    </sql>
+
+    <select id="selectSaleList" parameterType="Sale" resultMap="SaleResult">
+        <include refid="selectSaleVo"/>
+        <where>  
+            <if test="saleName != null  and saleName != ''"> and sale_name like concat('%', #{saleName}, '%')</if>
+            <if test="salePhone != null  and salePhone != ''"> and sale_phone = #{salePhone}</if>
+        </where>
+    </select>
+    
+    <select id="selectSaleBySaleId" parameterType="Long" resultMap="SaleResult">
+        <include refid="selectSaleVo"/>
+        where sale_id = #{saleId}
+    </select>
+
+    <insert id="insertSale" parameterType="Sale" useGeneratedKeys="true" keyProperty="saleId">
+        insert into t_sale
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="saleName != null">sale_name,</if>
+            <if test="salePhone != null">sale_phone,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="saleName != null">#{saleName},</if>
+            <if test="salePhone != null">#{salePhone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSale" parameterType="Sale">
+        update t_sale
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="saleName != null">sale_name = #{saleName},</if>
+            <if test="salePhone != null">sale_phone = #{salePhone},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where sale_id = #{saleId}
+    </update>
+
+    <delete id="deleteSaleBySaleId" parameterType="Long">
+        delete from t_sale where sale_id = #{saleId}
+    </delete>
+
+    <delete id="deleteSaleBySaleIds" parameterType="String">
+        delete from t_sale where sale_id in 
+        <foreach item="saleId" collection="array" open="(" separator="," close=")">
+            #{saleId}
+        </foreach>
+    </delete>
+</mapper>

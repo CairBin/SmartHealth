@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DrugMapper">
+    
+    <resultMap type="Drug" id="DrugResult">
+        <result property="drugId"    column="drug_id"    />
+        <result property="drugImg"    column="drug_img"    />
+        <result property="drugInfo"    column="drug_info"    />
+        <result property="drugEffect"    column="drug_effect"    />
+        <result property="drugName"    column="drug_name"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectDrugVo">
+        select drug_id, drug_img, drug_info, drug_effect, drug_name, create_time from t_drug
+    </sql>
+
+    <select id="selectDrugList" parameterType="Drug" resultMap="DrugResult">
+        <include refid="selectDrugVo"/>
+        <where>  
+            <if test="drugInfo != null  and drugInfo != ''"> and drug_info like concat('%', #{drugInfo}, '%')</if>
+            <if test="drugEffect != null  and drugEffect != ''"> and drug_effect like concat('%', #{drugEffect}, '%')</if>
+            <if test="drugName != null  and drugName != ''"> and drug_name like concat('%', #{drugName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDrugByDrugId" parameterType="Long" resultMap="DrugResult">
+        <include refid="selectDrugVo"/>
+        where drug_id = #{drugId}
+    </select>
+
+    <insert id="insertDrug" parameterType="Drug" useGeneratedKeys="true" keyProperty="drugId">
+        insert into t_drug
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="drugImg != null">drug_img,</if>
+            <if test="drugInfo != null">drug_info,</if>
+            <if test="drugEffect != null">drug_effect,</if>
+            <if test="drugName != null">drug_name,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="drugImg != null">#{drugImg},</if>
+            <if test="drugInfo != null">#{drugInfo},</if>
+            <if test="drugEffect != null">#{drugEffect},</if>
+            <if test="drugName != null">#{drugName},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDrug" parameterType="Drug">
+        update t_drug
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="drugImg != null">drug_img = #{drugImg},</if>
+            <if test="drugInfo != null">drug_info = #{drugInfo},</if>
+            <if test="drugEffect != null">drug_effect = #{drugEffect},</if>
+            <if test="drugName != null">drug_name = #{drugName},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where drug_id = #{drugId}
+    </update>
+
+    <delete id="deleteDrugByDrugId" parameterType="Long">
+        delete from t_drug where drug_id = #{drugId}
+    </delete>
+
+    <delete id="deleteDrugByDrugIds" parameterType="String">
+        delete from t_drug where drug_id in 
+        <foreach item="drugId" collection="array" open="(" separator="," close=")">
+            #{drugId}
+        </foreach>
+    </delete>
+</mapper>
