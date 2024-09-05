@@ -86,3 +86,7 @@ CREATE TABLE `db_smarthealth`.`t_region` (
   `mer_name` VARCHAR(100) NULL COMMENT '组合名称',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+
+ALTER TABLE `db_smarthealth`.`t_city` 
+CHANGE COLUMN `city_number` `city_number` BIGINT(20) NULL DEFAULT NULL COMMENT '城市编号' ;
