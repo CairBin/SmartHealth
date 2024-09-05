@@ -4,58 +4,58 @@ import java.util.List;
 import com.ruoyi.system.domain.China;
 
 /**
- * 中国省/市/县Mapper接口
+ * 城市管理Mapper接口
  * 
- * @author cairbin
+ * @author ruoyi
  * @date 2024-09-06
  */
 public interface ChinaMapper 
 {
     /**
-     * 查询中国省/市/县
+     * 查询城市管理
      * 
-     * @param id 中国省/市/县主键
-     * @return 中国省/市/县
+     * @param cityId 城市管理主键
+     * @return 城市管理
      */
-    public China selectChinaById(Long id);
+    public China selectChinaByCityId(Long cityId);
 
     /**
-     * 查询中国省/市/县列表
+     * 查询城市管理列表
      * 
-     * @param china 中国省/市/县
-     * @return 中国省/市/县集合
+     * @param china 城市管理
+     * @return 城市管理集合
      */
     public List<China> selectChinaList(China china);
 
     /**
-     * 新增中国省/市/县
+     * 新增城市管理
      * 
-     * @param china 中国省/市/县
+     * @param china 城市管理
      * @return 结果
      */
     public int insertChina(China china);
 
     /**
-     * 修改中国省/市/县
+     * 修改城市管理
      * 
-     * @param china 中国省/市/县
+     * @param china 城市管理
      * @return 结果
      */
     public int updateChina(China china);
 
     /**
-     * 删除中国省/市/县
+     * 删除城市管理
      * 
-     * @param id 中国省/市/县主键
+     * @param cityId 城市管理主键
      * @return 结果
      */
-    public int deleteChinaById(Long id);
+    public int deleteChinaByCityId(Long cityId);
 
     /**
-     * 批量删除中国省/市/县
+     * 批量删除城市管理
      * 
-     * @param ids 需要删除的数据主键集合
+     * @param cityIds 需要删除的数据主键集合
      * @return 结果
      */
-    public int deleteChinaByIds(Long[] ids);
+    public int deleteChinaByCityIds(Long[] cityIds);
 }

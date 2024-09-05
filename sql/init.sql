@@ -56,26 +56,12 @@ CREATE TABLE `db_smarthealth`.`t_drug_sale` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
 CREATE TABLE `db_smarthealth`.`t_china` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '省/市/县ID',
+  `city_id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '省/市/县ID',
   `name` VARCHAR(40) NULL COMMENT '名称',
   `parent_id` BIGINT(20) NULL COMMENT '父级ID',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
-
-CREATE TABLE `db_smarthealth`.`t_city` (
-  `city_id` INT NOT NULL AUTO_INCREMENT,
-  `city_number` VARCHAR(255) NULL,
-  `create_time` DATETIME NULL,
-  `update_time` DATETIME NULL,
-  PRIMARY KEY (`city_id`),
-  UNIQUE INDEX `city_id_UNIQUE` (`city_id` ASC));
-
-ALTER TABLE `db_smarthealth`.`t_city` 
-CHANGE COLUMN `city_id` `city_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '城市ID' ,
-CHANGE COLUMN `city_number` `city_number` VARCHAR(255) NULL DEFAULT NULL COMMENT '城市编号' ,
-CHANGE COLUMN `create_time` `create_time` DATETIME NULL DEFAULT NULL COMMENT '创建时间' ,
-CHANGE COLUMN `update_time` `update_time` DATETIME NULL DEFAULT NULL COMMENT '更新时间' ;
 
 CREATE TABLE `db_smarthealth`.`t_region` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -88,5 +74,13 @@ CREATE TABLE `db_smarthealth`.`t_region` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
 
 
-ALTER TABLE `db_smarthealth`.`t_city` 
-CHANGE COLUMN `city_number` `city_number` BIGINT(20) NULL DEFAULT NULL COMMENT '城市编号' ;
+CREATE TABLE `db_smarthealth`.`t_medical_policy` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `code` INT(11) NULL COMMENT '政策编号',
+  `title` VARCHAR(255) NULL COMMENT '政策标题',
+  `message` TEXT NULL COMMENT '政策内容',
+  `city_id` BIGINT(20) NULL COMMENT '城市ID',
+  `create_time` DATETIME NULL COMMENT '创建时间',
+  `update_time` DATETIME NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));

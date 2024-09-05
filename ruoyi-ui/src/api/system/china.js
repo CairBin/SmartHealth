@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询中国省/市/县列表
+// 查询城市管理列表
 export function listChina(query) {
   return request({
     url: '/system/china/list',
@@ -9,15 +9,15 @@ export function listChina(query) {
   })
 }
 
-// 查询中国省/市/县详细
-export function getChina(id) {
+// 查询城市管理详细
+export function getChina(cityId) {
   return request({
-    url: '/system/china/' + id,
+    url: '/system/china/' + cityId,
     method: 'get'
   })
 }
 
-// 新增中国省/市/县
+// 新增城市管理
 export function addChina(data) {
   return request({
     url: '/system/china',
@@ -26,7 +26,7 @@ export function addChina(data) {
   })
 }
 
-// 修改中国省/市/县
+// 修改城市管理
 export function updateChina(data) {
   return request({
     url: '/system/china',
@@ -35,10 +35,10 @@ export function updateChina(data) {
   })
 }
 
-// 删除中国省/市/县
-export function delChina(id) {
+// 删除城市管理
+export function delChina(cityId) {
   return request({
-    url: '/system/china/' + id,
+    url: '/system/china/' + cityId,
     method: 'delete'
   })
 }

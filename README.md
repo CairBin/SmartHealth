@@ -154,20 +154,9 @@ public AjaxResult edit(@RequestBody Company company)
 
 | 列名      | 数据类型    | 长度 | 是否为空 | 默认值 | 备注       |
 | --------- | ----------- | ---- | -------- | ------ | ---------- |
-| id        | BIGINT(20)  |      | NO       | 1      | 省/市/县ID |
+| city_id   | BIGINT(20)  |      | NO       | 1      | 省/市/县ID |
 | name      | VARCHAR(40) | 40   | YES      |        | 名称       |
 | parent_id | BIGINT(20)  |      | YES      |        | 上级ID     |
-
-
-
-* 城市地点管理表(t_city)
-
-| 列名        | 数据类型   | 长度 | 是否为空 | 默认值 | 备注     |
-| ----------- | ---------- | ---- | -------- | ------ | -------- |
-| city_id     | BIGINT(20) |      | NO       | 1      | 城市ID   |
-| city_number | BIGINT(20) |      | YES      |        | 城市编号 |
-| create_time | DATETIME   |      | YES      |        | 创建时间 |
-| update_time | DATETIME   |      | YES      |        | 更新时间 |
 
 
 
@@ -266,6 +255,7 @@ public AjaxResult remove(@PathVariable Long[] ids)
 | city_id     | BIGINT(20)   |       | YES      |        | 城市ID   |
 | create_time | DATETIME     |       | YES      |        | 创建时间 |
 | update_time | DATETIME     |       | YES      |        | 更新时间 |
+| code        | INT(11)      |       | YES      |        | 医保编号 |
 
 
 

@@ -6,9 +6,9 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.TreeEntity;
 
 /**
- * 中国省/市/县对象 t_china
+ * 城市管理对象 t_china
  * 
- * @author cairbin
+ * @author ruoyi
  * @date 2024-09-06
  */
 public class China extends TreeEntity
@@ -16,20 +16,20 @@ public class China extends TreeEntity
     private static final long serialVersionUID = 1L;
 
     /** 省/市/县ID */
-    private Long id;
+    private Long cityId;
 
     /** 名称 */
     @Excel(name = "名称")
     private String name;
 
-    public void setId(Long id) 
+    public void setCityId(Long cityId) 
     {
-        this.id = id;
+        this.cityId = cityId;
     }
 
-    public Long getId() 
+    public Long getCityId() 
     {
-        return id;
+        return cityId;
     }
     public void setName(String name) 
     {
@@ -44,7 +44,7 @@ public class China extends TreeEntity
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
+            .append("cityId", getCityId())
             .append("name", getName())
             .append("parentId", getParentId())
             .toString();

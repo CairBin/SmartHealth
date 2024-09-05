@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ruoyi.system.mapper.ChinaMapper">
     
     <resultMap type="China" id="ChinaResult">
-        <result property="id"    column="id"    />
+        <result property="cityId"    column="city_id"    />
         <result property="name"    column="name"    />
         <result property="parentId"    column="parent_id"    />
     </resultMap>
 
     <sql id="selectChinaVo">
-        select id, name, parent_id from t_china
+        select city_id, name, parent_id from t_china
     </sql>
 
     <select id="selectChinaList" parameterType="China" resultMap="ChinaResult">
@@ -22,19 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectChinaById" parameterType="Long" resultMap="ChinaResult">
+    <select id="selectChinaByCityId" parameterType="Long" resultMap="ChinaResult">
         <include refid="selectChinaVo"/>
-        where id = #{id}
+        where city_id = #{cityId}
     </select>
 
-    <insert id="insertChina" parameterType="China" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertChina" parameterType="China" useGeneratedKeys="true" keyProperty="cityId">
         insert into t_china
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">name,</if>
+            <if test="name != null">name,</if>
             <if test="parentId != null">parent_id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">#{name},</if>
+            <if test="name != null">#{name},</if>
             <if test="parentId != null">#{parentId},</if>
          </trim>
     </insert>
@@ -42,20 +42,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateChina" parameterType="China">
         update t_china
         <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="name != null">name = #{name},</if>
             <if test="parentId != null">parent_id = #{parentId},</if>
         </trim>
-        where id = #{id}
+        where city_id = #{cityId}
     </update>
 
-    <delete id="deleteChinaById" parameterType="Long">
-        delete from t_china where id = #{id}
+    <delete id="deleteChinaByCityId" parameterType="Long">
+        delete from t_china where city_id = #{cityId}
     </delete>
 
-    <delete id="deleteChinaByIds" parameterType="String">
-        delete from t_china where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
+    <delete id="deleteChinaByCityIds" parameterType="String">
+        delete from t_china where city_id in 
+        <foreach item="cityId" collection="array" open="(" separator="," close=")">
+            #{cityId}
         </foreach>
     </delete>
 </mapper>

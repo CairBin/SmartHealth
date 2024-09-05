@@ -8,9 +8,9 @@ import com.ruoyi.system.domain.China;
 import com.ruoyi.system.service.IChinaService;
 
 /**
- * 中国省/市/县Service业务层处理
+ * 城市管理Service业务层处理
  * 
- * @author cairbin
+ * @author ruoyi
  * @date 2024-09-06
  */
 @Service
@@ -20,22 +20,22 @@ public class ChinaServiceImpl implements IChinaService
     private ChinaMapper chinaMapper;
 
     /**
-     * 查询中国省/市/县
+     * 查询城市管理
      * 
-     * @param id 中国省/市/县主键
-     * @return 中国省/市/县
+     * @param cityId 城市管理主键
+     * @return 城市管理
      */
     @Override
-    public China selectChinaById(Long id)
+    public China selectChinaByCityId(Long cityId)
     {
-        return chinaMapper.selectChinaById(id);
+        return chinaMapper.selectChinaByCityId(cityId);
     }
 
     /**
-     * 查询中国省/市/县列表
+     * 查询城市管理列表
      * 
-     * @param china 中国省/市/县
-     * @return 中国省/市/县
+     * @param china 城市管理
+     * @return 城市管理
      */
     @Override
     public List<China> selectChinaList(China china)
@@ -44,9 +44,9 @@ public class ChinaServiceImpl implements IChinaService
     }
 
     /**
-     * 新增中国省/市/县
+     * 新增城市管理
      * 
-     * @param china 中国省/市/县
+     * @param china 城市管理
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class ChinaServiceImpl implements IChinaService
     }
 
     /**
-     * 修改中国省/市/县
+     * 修改城市管理
      * 
-     * @param china 中国省/市/县
+     * @param china 城市管理
      * @return 结果
      */
     @Override
@@ -68,26 +68,26 @@ public class ChinaServiceImpl implements IChinaService
     }
 
     /**
-     * 批量删除中国省/市/县
+     * 批量删除城市管理
      * 
-     * @param ids 需要删除的中国省/市/县主键
+     * @param cityIds 需要删除的城市管理主键
      * @return 结果
      */
     @Override
-    public int deleteChinaByIds(Long[] ids)
+    public int deleteChinaByCityIds(Long[] cityIds)
     {
-        return chinaMapper.deleteChinaByIds(ids);
+        return chinaMapper.deleteChinaByCityIds(cityIds);
     }
 
     /**
-     * 删除中国省/市/县信息
+     * 删除城市管理信息
      * 
-     * @param id 中国省/市/县主键
+     * @param cityId 城市管理主键
      * @return 结果
      */
     @Override
-    public int deleteChinaById(Long id)
+    public int deleteChinaByCityId(Long cityId)
     {
-        return chinaMapper.deleteChinaById(id);
+        return chinaMapper.deleteChinaByCityId(cityId);
     }
 }

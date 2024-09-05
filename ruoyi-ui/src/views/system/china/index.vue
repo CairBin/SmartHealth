@@ -50,7 +50,7 @@
       v-if="refreshTable"
       v-loading="loading"
       :data="chinaList"
-      row-key="id"
+      row-key="cityId"
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
@@ -83,7 +83,7 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改中国省/市/县对话框 -->
+    <!-- 添加或修改城市管理对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="名称" prop="name">
@@ -117,9 +117,9 @@ export default {
       loading: true,
       // 显示搜索条件
       showSearch: true,
-      // 中国省/市/县表格数据
+      // 城市管理表格数据
       chinaList: [],
-      // 中国省/市/县树选项
+      // 城市管理树选项
       chinaOptions: [],
       // 弹出层标题
       title: "",
@@ -138,9 +138,6 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        name: [
-          { required: true, message: "名称不能为空", trigger: "blur" }
-        ],
       }
     };
   },
@@ -148,31 +145,31 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询中国省/市/县列表 */
+    /** 查询城市管理列表 */
     getList() {
       this.loading = true;
       listChina(this.queryParams).then(response => {
-        this.chinaList = this.handleTree(response.data, "id", "parentId");
+        this.chinaList = this.handleTree(response.data, "cityId", "parentId");
         this.loading = false;
       });
     },
-    /** 转换中国省/市/县数据结构 */
+    /** 转换城市管理数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
       }
       return {
-        id: node.id,
+        id: node.cityId,
         label: node.name,
         children: node.children
       };
     },
-	/** 查询中国省/市/县下拉树结构 */
+	/** 查询城市管理下拉树结构 */
     getTreeselect() {
       listChina().then(response => {
         this.chinaOptions = [];
-        const data = { id: 0, name: '顶级节点', children: [] };
-        data.children = this.handleTree(response.data, "id", "parentId");
+        const data = { cityId: 0, name: '顶级节点', children: [] };
+        data.children = this.handleTree(response.data, "cityId", "parentId");
         this.chinaOptions.push(data);
       });
     },
@@ -184,7 +181,7 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-        id: null,
+        cityId: null,
         name: null,
         parentId: null
       };
@@ -203,13 +200,13 @@ export default {
     handleAdd(row) {
       this.reset();
       this.getTreeselect();
-      if (row != null && row.id) {
-        this.form.parentId = row.id;
+      if (row != null && row.cityId) {
+        this.form.parentId = row.cityId;
       } else {
         this.form.parentId = 0;
       }
       this.open = true;
-      this.title = "添加中国省/市/县";
+      this.title = "添加城市管理";
     },
     /** 展开/折叠操作 */
     toggleExpandAll() {
@@ -226,17 +223,17 @@ export default {
       if (row != null) {
         this.form.parentId = row.parentId;
       }
-      getChina(row.id).then(response => {
+      getChina(row.cityId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改中国省/市/县";
+        this.title = "修改城市管理";
       });
     },
     /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          if (this.form.id != null) {
+          if (this.form.cityId != null) {
             updateChina(this.form).then(response => {
               this.$modal.msgSuccess("修改成功");
               this.open = false;
@@ -254,8 +251,8 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除中国省/市/县编号为"' + row.id + '"的数据项？').then(function() {
-        return delChina(row.id);
+      this.$modal.confirm('是否确认删除城市管理编号为"' + row.cityId + '"的数据项？').then(function() {
+        return delChina(row.cityId);
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");

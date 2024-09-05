@@ -21,9 +21,9 @@ import com.ruoyi.system.service.IChinaService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 
 /**
- * 中国省/市/县Controller
+ * 城市管理Controller
  * 
- * @author cairbin
+ * @author ruoyi
  * @date 2024-09-06
  */
 @RestController
@@ -34,7 +34,7 @@ public class ChinaController extends BaseController
     private IChinaService chinaService;
 
     /**
-     * 查询中国省/市/县列表
+     * 查询城市管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:china:list')")
     @GetMapping("/list")
@@ -45,33 +45,33 @@ public class ChinaController extends BaseController
     }
 
     /**
-     * 导出中国省/市/县列表
+     * 导出城市管理列表
      */
     @PreAuthorize("@ss.hasPermi('system:china:export')")
-    @Log(title = "中国省/市/县", businessType = BusinessType.EXPORT)
+    @Log(title = "城市管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, China china)
     {
         List<China> list = chinaService.selectChinaList(china);
         ExcelUtil<China> util = new ExcelUtil<China>(China.class);
-        util.exportExcel(response, list, "中国省/市/县数据");
+        util.exportExcel(response, list, "城市管理数据");
     }
 
     /**
-     * 获取中国省/市/县详细信息
+     * 获取城市管理详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:china:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/{cityId}")
+    public AjaxResult getInfo(@PathVariable("cityId") Long cityId)
     {
-        return success(chinaService.selectChinaById(id));
+        return success(chinaService.selectChinaByCityId(cityId));
     }
 
     /**
-     * 新增中国省/市/县
+     * 新增城市管理
      */
     @PreAuthorize("@ss.hasPermi('system:china:add')")
-    @Log(title = "中国省/市/县", businessType = BusinessType.INSERT)
+    @Log(title = "城市管理", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody China china)
     {
@@ -79,10 +79,10 @@ public class ChinaController extends BaseController
     }
 
     /**
-     * 修改中国省/市/县
+     * 修改城市管理
      */
     @PreAuthorize("@ss.hasPermi('system:china:edit')")
-    @Log(title = "中国省/市/县", businessType = BusinessType.UPDATE)
+    @Log(title = "城市管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody China china)
     {
@@ -90,13 +90,13 @@ public class ChinaController extends BaseController
     }
 
     /**
-     * 删除中国省/市/县
+     * 删除城市管理
      */
     @PreAuthorize("@ss.hasPermi('system:china:remove')")
-    @Log(title = "中国省/市/县", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    @Log(title = "城市管理", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{cityIds}")
+    public AjaxResult remove(@PathVariable Long[] cityIds)
     {
-        return toAjax(chinaService.deleteChinaByIds(ids));
+        return toAjax(chinaService.deleteChinaByCityIds(cityIds));
     }
 }
