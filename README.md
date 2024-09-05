@@ -606,7 +606,7 @@ ruoyi:
 
 
 
-创建数据库`db_smarthealth`，并执行`./sql`下的所有SQL脚本，并修改`./ruoyi-admin/src/resources/application-druid.yml`数据库连接信息。
+创建数据库`db_smarthealth`，并执行`./sql`下的`db_smarthealth`，并修改`./ruoyi-admin/src/resources/application-druid.yml`数据库连接信息。
 
 
 
