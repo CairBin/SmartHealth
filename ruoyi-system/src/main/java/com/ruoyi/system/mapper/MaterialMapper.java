@@ -1,0 +1,61 @@
+package com.ruoyi.system.mapper;
+
+import java.util.List;
+import com.ruoyi.system.domain.Material;
+
+/**
+ * 必备材料Mapper接口
+ * 
+ * @author cairbin
+ * @date 2024-09-05
+ */
+public interface MaterialMapper 
+{
+    /**
+     * 查询必备材料
+     * 
+     * @param id 必备材料主键
+     * @return 必备材料
+     */
+    public Material selectMaterialById(Long id);
+
+    /**
+     * 查询必备材料列表
+     * 
+     * @param material 必备材料
+     * @return 必备材料集合
+     */
+    public List<Material> selectMaterialList(Material material);
+
+    /**
+     * 新增必备材料
+     * 
+     * @param material 必备材料
+     * @return 结果
+     */
+    public int insertMaterial(Material material);
+
+    /**
+     * 修改必备材料
+     * 
+     * @param material 必备材料
+     * @return 结果
+     */
+    public int updateMaterial(Material material);
+
+    /**
+     * 删除必备材料
+     * 
+     * @param id 必备材料主键
+     * @return 结果
+     */
+    public int deleteMaterialById(Long id);
+
+    /**
+     * 批量删除必备材料
+     * 
+     * @param ids 需要删除的数据主键集合
+     * @return 结果
+     */
+    public int deleteMaterialByIds(Long[] ids);
+}

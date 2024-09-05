@@ -243,7 +243,57 @@ TODO
 
 #### 接口设计
 
-TODO
+
+
+```java
+/**
+ * 查询必备材料列表
+*/
+@PreAuthorize("@ss.hasPermi('system:material:list')")
+@GetMapping("/list")
+public TableDataInfo list(Material material)
+
+/**
+ * 导出必备材料列表
+*/
+@PreAuthorize("@ss.hasPermi('system:material:export')")
+@Log(title = "必备材料", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, Material material)
+  
+/**
+* 获取必备材料详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:material:query')")
+@GetMapping(value = "/{id}")
+public AjaxResult getInfo(@PathVariable("id") Long id)
+  
+/**
+* 新增必备材料
+*/
+@PreAuthorize("@ss.hasPermi('system:material:add')")
+@Log(title = "必备材料", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody Material material)
+  
+/**
+* 修改必备材料
+*/
+@PreAuthorize("@ss.hasPermi('system:material:edit')")
+@Log(title = "必备材料", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody Material material)
+  
+/**
+* 删除必备材料
+*/
+@PreAuthorize("@ss.hasPermi('system:material:remove')")
+@Log(title = "必备材料", businessType = BusinessType.DELETE)
+@DeleteMapping("/{ids}")
+public AjaxResult remove(@PathVariable Long[] ids)
+```
+
+
 
 
 
