@@ -27,8 +27,8 @@
 
 最终用户为实际使用慧医管理系统的人群，他们可能是来自不同角色的工作人员，每个角色的用户需求和操作流程各不相同。
 
-- **医院和诊所的管理人员：**需要查看和管理医师信息、排班表、患者信息和数据等。
-- **医师和护士：**通过系统查看患者病历、预约信息、填写处方、更新患者病程等。
+- **医院和诊所的管理人员：** 需要查看和管理医师信息、排班表、患者信息和数据等。
+- **医师和护士：** 通过系统查看患者病历、预约信息、填写处方、更新患者病程等。
 
 
 
@@ -261,7 +261,58 @@ public AjaxResult remove(@PathVariable Long[] ids)
 
 #### 接口设计
 
-TODO
+```java
+/**
+* 查询医保政策管理列表
+*/
+@PreAuthorize("@ss.hasPermi('system:policy:list')")
+@GetMapping("/list")
+public TableDataInfo list(MedicalPolicy medicalPolicy)
+  
+  
+/**
+* 导出医保政策管理列表
+*/
+@PreAuthorize("@ss.hasPermi('system:policy:export')")
+@Log(title = "医保政策管理", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, MedicalPolicy medicalPolicy)
+  
+
+/**
+* 获取医保政策管理详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:policy:query')")
+@GetMapping(value = "/{id}")
+public AjaxResult getInfo(@PathVariable("id") Long id)
+  
+  
+/**
+* 新增医保政策管理
+*/
+@PreAuthorize("@ss.hasPermi('system:policy:add')")
+@Log(title = "医保政策管理", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody MedicalPolicy medicalPolicy)
+  
+/**
+* 修改医保政策管理
+*/
+@PreAuthorize("@ss.hasPermi('system:policy:edit')")
+@Log(title = "医保政策管理", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody MedicalPolicy medicalPolicy)
+  
+/**
+* 删除医保政策管理
+*/
+ @PreAuthorize("@ss.hasPermi('system:policy:remove')")
+@Log(title = "医保政策管理", businessType = BusinessType.DELETE)
+@DeleteMapping("/{ids}")
+public AjaxResult remove(@PathVariable Long[] ids)
+```
+
+
 
 
 
