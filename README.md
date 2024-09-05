@@ -188,7 +188,59 @@ public AjaxResult edit(@RequestBody Company company)
 
 #### 接口设计
 
-TODO
+
+
+* 中国省/市/县信息维护接口
+
+```java
+/**
+* 查询中国省/市/县列表
+*/
+@PreAuthorize("@ss.hasPermi('system:china:list')")
+@GetMapping("/list")
+public AjaxResult list(China china)
+
+/**
+* 导出中国省/市/县列表
+*/
+@PreAuthorize("@ss.hasPermi('system:china:export')")
+@Log(title = "中国省/市/县", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, China china)
+      
+/**
+* 获取中国省/市/县详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:china:query')")
+@GetMapping(value = "/{id}")
+public AjaxResult getInfo(@PathVariable("id") Long id)
+      
+/**
+* 新增中国省/市/县
+*/
+@PreAuthorize("@ss.hasPermi('system:china:add')")
+@Log(title = "中国省/市/县", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody China china)
+      
+/**
+* 修改中国省/市/县
+*/
+@PreAuthorize("@ss.hasPermi('system:china:edit')")
+@Log(title = "中国省/市/县", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody China china)
+      
+/**
+* 删除中国省/市/县
+*/
+@PreAuthorize("@ss.hasPermi('system:china:remove')")
+@Log(title = "中国省/市/县", businessType = BusinessType.DELETE)
+@DeleteMapping("/{ids}")
+public AjaxResult remove(@PathVariable Long[] ids)
+```
+
+
 
 
 
