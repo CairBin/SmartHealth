@@ -54,3 +54,35 @@ CREATE TABLE `db_smarthealth`.`t_drug_sale` (
   `drug_id` BIGINT(20) NULL COMMENT '药品ID',
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+CREATE TABLE `db_smarthealth`.`t_china` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '省/市/县ID',
+  `name` VARCHAR(40) NULL COMMENT '名称',
+  `parent_id` BIGINT(20) NULL COMMENT '父级ID',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));
+
+
+CREATE TABLE `db_smarthealth`.`t_city` (
+  `city_id` INT NOT NULL AUTO_INCREMENT,
+  `city_number` VARCHAR(255) NULL,
+  `create_time` DATETIME NULL,
+  `update_time` DATETIME NULL,
+  PRIMARY KEY (`city_id`),
+  UNIQUE INDEX `city_id_UNIQUE` (`city_id` ASC));
+
+ALTER TABLE `db_smarthealth`.`t_city` 
+CHANGE COLUMN `city_id` `city_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT '城市ID' ,
+CHANGE COLUMN `city_number` `city_number` VARCHAR(255) NULL DEFAULT NULL COMMENT '城市编号' ,
+CHANGE COLUMN `create_time` `create_time` DATETIME NULL DEFAULT NULL COMMENT '创建时间' ,
+CHANGE COLUMN `update_time` `update_time` DATETIME NULL DEFAULT NULL COMMENT '更新时间' ;
+
+CREATE TABLE `db_smarthealth`.`t_region` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `city_code` VARCHAR(255) NULL COMMENT '城市编号',
+  `lat` FLOAT NULL COMMENT '纬度',
+  `lng` FLOAT NULL COMMENT '经度',
+  `level` INT(11) NULL COMMENT '区域等级',
+  `mer_name` VARCHAR(100) NULL COMMENT '组合名称',
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC));

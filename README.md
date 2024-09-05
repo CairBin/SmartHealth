@@ -176,7 +176,7 @@ public AjaxResult edit(@RequestBody Company company)
 | 列名      | 数据类型     | 长度 | 是否为空 | 默认值 | 备注     |
 | --------- | ------------ | ---- | -------- | ------ | -------- |
 | id        | BIGINT(20)   |      | NO       | 1      | ID       |
-| city_code | VARCHAR(20)  | 20   | YES      |        | 城市编码 |
+| city_code | VARCHAR(255) | 255  | YES      |        | 城市编码 |
 | lat       | FLOAT        |      |          |        | 纬度     |
 | lng       | FLOAT        |      |          |        | 经度     |
 | level     | INT(11)      | 11   |          |        | 区域等级 |
