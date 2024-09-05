@@ -91,7 +91,56 @@
 
 #### 接口设计
 
-TODO
+```java
+/**
+* 查询药品公司列表
+*/
+@PreAuthorize("@ss.hasPermi('system:company:list')")
+@GetMapping("/list")
+public TableDataInfo list(Company company)
+  
+  
+/**
+* 导出药品公司列表
+*/
+@PreAuthorize("@ss.hasPermi('system:company:export')")
+@Log(title = "药品公司", businessType = BusinessType.EXPORT)
+@PostMapping("/export")
+public void export(HttpServletResponse response, Company company)
+  
+/**
+* 获取药品公司详细信息
+*/
+@PreAuthorize("@ss.hasPermi('system:company:query')")
+@GetMapping(value = "/{companyId}")
+public AjaxResult getInfo(@PathVariable("companyId") Long companyId)
+  
+/**
+* 新增药品公司
+*/
+@PreAuthorize("@ss.hasPermi('system:company:add')")
+@Log(title = "药品公司", businessType = BusinessType.INSERT)
+@PostMapping
+public AjaxResult add(@RequestBody Company company)
+  
+/**
+* 修改药品公司
+*/
+@PreAuthorize("@ss.hasPermi('system:company:edit')")
+@Log(title = "药品公司", businessType = BusinessType.UPDATE)
+@PutMapping
+public AjaxResult edit(@RequestBody Company company)
+  
+/**
+* 删除药品公司
+*/
+@PreAuthorize("@ss.hasPermi('system:company:remove')")
+@Log(title = "药品公司", businessType = BusinessType.DELETE)
+@DeleteMapping("/{companyIds}")
+    public AjaxResult remove(@PathVariable Long[] companyIds)
+```
+
+
 
 
 
